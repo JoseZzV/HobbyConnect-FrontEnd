@@ -33,11 +33,10 @@ export default function ProfilePage() {
     if (token && userData) {
       setIsAuthenticated(true);
       const user = JSON.parse(userData);
-      // Actualizar los estados con los datos del usuario
       setNombre(user.nombre || 'aqui nombre');
       setCorreo(user.correo || 'aqui correo');
-      setSobreMi(user.descripcion || ''); // Si descripcion es null, usamos un string vacío
-      setHobbies(user.hobbies || []); // Si hobbies es null, usamos un array vacío
+      setSobreMi(user.descripcion || '');
+      setHobbies(user.hobbies || []);
     } else {
       setIsAuthenticated(false);
     }
@@ -80,7 +79,6 @@ export default function ProfilePage() {
       }
 
       setNombre(draftName);
-      // Actualizar localStorage con el nuevo nombre
       const updatedUserData = JSON.parse(localStorage.getItem('userData') || '{}');
       updatedUserData.nombre = draftName;
       localStorage.setItem('userData', JSON.stringify(updatedUserData));
@@ -105,7 +103,7 @@ export default function ProfilePage() {
       return;
     }
 
-    try {
+       try {
       const token = localStorage.getItem('access_token');
       const userData = localStorage.getItem('userData');
       if (!token || !userData) throw new Error('No autenticado');
@@ -177,7 +175,6 @@ export default function ProfilePage() {
       }
 
       setSobreMi(draftAbout);
-      // Actualizar localStorage con la nueva descripción
       const updatedUserData = JSON.parse(localStorage.getItem('userData') || '{}');
       updatedUserData.descripcion = draftAbout;
       localStorage.setItem('userData', JSON.stringify(updatedUserData));
@@ -192,7 +189,6 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen p-8 bg-black flex items-start gap-12 text-white">
-      {/* Mostrar un mensaje si el usuario no está autenticado */}
       {!isAuthenticated && (
         <div className="bg-gray-800 p-6 rounded-lg w-full text-center">
           <h2 className="text-xl font-semibold mb-4">
@@ -201,12 +197,9 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* Resto de la UI (solo se muestra si está autenticado) */}
       {isAuthenticated && (
         <>
-          {/* LADO IZQUIERDO: foto + hobbies */}
           <div className="flex flex-col items-center gap-8 flex-shrink-0">
-            {/* FOTO DE PERFIL */}
             <div className="relative w-28 h-28">
               <img
                 src="/assets/default-profile.png"
@@ -223,7 +216,6 @@ export default function ProfilePage() {
               <input id="photoInput" type="file" accept="image/*" className="hidden" />
             </div>
 
-            {/* MIS HOBBIES */}
             <div className="bg-gray-800 p-6 rounded-lg w-full">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">Mis Hobbies</h3>
@@ -255,9 +247,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* CONTENIDO CENTRAL: nombre, correo y sobre mi */}
           <div className="flex-1 flex flex-col items-stretch gap-8">
-            {/* Nombre y correo: ahora ocupa todo el ancho */}
             <div className="bg-gray-800 p-6 rounded-lg w-full">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold">{nombre}</h2>
@@ -272,7 +262,6 @@ export default function ProfilePage() {
               <p className="mt-2 text-gray-300">{correo}</p>
             </div>
 
-            {/* Sobre mi: también ocupa ancho completo */}
             <div className="bg-gray-800 p-6 rounded-lg w-full">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold">Sobre mí</h3>
@@ -288,7 +277,6 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* MODAL: Editar Nombre */}
           {isNameModalOpen && (
             <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
               <div className="bg-gray-800 rounded-lg p-6 w-80 text-white">
@@ -316,7 +304,6 @@ export default function ProfilePage() {
             </div>
           )}
 
-          {/* MODAL: Agregar Hobby */}
           {isAddModalOpen && (
             <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
               <div className="bg-gray-800 rounded-lg p-6 w-80 text-white">
@@ -344,7 +331,6 @@ export default function ProfilePage() {
             </div>
           )}
 
-          {/* MODAL: Editar Sobre mi */}
           {isAboutModalOpen && (
             <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
               <div className="bg-gray-800 rounded-lg p-6 w-80 text-white">

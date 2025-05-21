@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode';
 import { LogOut } from 'lucide-react';
+import Link from 'next/link';
 
 interface DecodedToken {
   exp: number;
@@ -50,13 +51,27 @@ export default function SessionLayout({ children }: SessionLayoutProps) {
     <div className="flex flex-col min-h-screen">
       <nav className="w-full p-4 bg-gradient-to-r from-pink-200 to-teal-200 flex items-center justify-between">
         <img src="/assets/logo.png" alt="Logo" className="h-8" />
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-2 text-black hover:opacity-80 cursor-pointer"
-          title="Cerrar sesión"
-        >
-          <LogOut size={20} className="cursor-pointer" /> Logout
-        </button>
+        <ul className="flex gap-6 items-center">
+          <li>
+            <Link href="/session/profile" className="text-black hover:opacity-80">
+              Perfil
+            </Link>
+          </li>
+          <li>
+            <Link href="/session/communities" className="text-black hover:opacity-80">
+              Comunidades
+            </Link>
+          </li>
+          <li>
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 text-black hover:opacity-80 cursor-pointer"
+              title="Cerrar sesión"
+            >
+              <LogOut size={20} className="cursor-pointer" /> Logout
+            </button>
+          </li>
+        </ul>
       </nav>
       <main className="flex-1">
         {children}
@@ -64,7 +79,6 @@ export default function SessionLayout({ children }: SessionLayoutProps) {
     </div>
   );
 }
-
 
 
 
